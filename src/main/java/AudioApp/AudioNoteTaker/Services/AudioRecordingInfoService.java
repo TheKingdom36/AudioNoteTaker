@@ -1,8 +1,9 @@
 package AudioApp.AudioNoteTaker.Services;
 
 import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.Repository.AudioRecordingAudio.AudioRecordingInfoRepository;
+import AudioApp.AudioNoteTaker.Repository.AudioRecording.AudioRecordingInfoRepository;
 
+import AudioApp.AudioNoteTaker.Services.Interfaces.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

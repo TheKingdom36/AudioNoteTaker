@@ -1,8 +1,10 @@
 package AudioApp.AudioNoteTaker.Controllers;
 
 
+import AudioApp.AudioNoteTaker.Controllers.ReponseRequests.ListAudioRecordingRequest;
 import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.Models.AudioFile;
+import AudioApp.AudioNoteTaker.Models.AudioModel;
+import AudioApp.AudioNoteTaker.Services.AudioModelService;
 import AudioApp.AudioNoteTaker.Services.AudioModleCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +20,29 @@ import java.util.Optional;
 public class RecordingController {
 
     @Autowired
-    AudioModleCrudService audioRecordingCrudService;
+    AudioModelService audioModelService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<AudioFile> getAudioRecording(@PathVariable(value = "id") Optional<String> id) {
-        return null;
+    public ResponseEntity<?> getAudioRecording(@PathVariable(value = "id") Optional<Long> id) {
+        Optional<AudioModel> audioModelOptional = audioModelService.findOne(id.get());
+
+        if (audioModelOptional.isEmpty()==false){
+            ResponseEntity<AudioModel> responseEntity = new ResponseEntity<>(audioModelOptional.get(),HttpStatus.OK);
+
+            return responseEntity;
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/list")
-    public ResponseEntity<ArrayList<AudioRecordingInfo>> getAudioRecordings(@RequestParam(value = "tags") Optional<String> tags,@RequestParam(value = "Date") Optional<String> date) {
+    public ResponseEntity<ArrayList<AudioRecordingInfo>> getAudioRecordings(ListAudioRecordingRequest listAudioRecordingRequest) {
+
+
+
+        audioModelService.findWith(tags, beginDate,endDate);
+
+
         return audioRecordingCrudService.;
     }
 

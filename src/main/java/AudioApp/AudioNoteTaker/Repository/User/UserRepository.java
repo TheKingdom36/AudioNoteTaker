@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 
 @Repository
-public interface UserRepository extends UserRepositoryCustom, JpaRepositoryImplementation {
+public interface UserRepository extends UserRepositoryCustom, JpaRepositoryImplementation<User,String> {
 
 }

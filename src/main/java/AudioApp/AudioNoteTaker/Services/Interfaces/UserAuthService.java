@@ -1,7 +1,10 @@
-package AudioApp.AudioNoteTaker.Services;
+package AudioApp.AudioNoteTaker.Services.Interfaces;
+
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public interface UserAuthService {
 /*
 

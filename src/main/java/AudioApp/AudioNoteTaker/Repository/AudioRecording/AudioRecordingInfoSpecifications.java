@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.Repository.AudioRecordingAudio;
+package AudioApp.AudioNoteTaker.Repository.AudioRecording;
 
 import AudioApp.AudioNoteTaker.Entities.User;
 import org.springframework.data.jpa.domain.Specification;

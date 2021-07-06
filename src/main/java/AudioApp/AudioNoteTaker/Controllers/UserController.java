@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/User")
 public class UserController {
@@ -16,9 +18,16 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PublicUserInfo> getUserInfo(@PathVariable String id){
-        User user = userService.find(id);
+    public ResponseEntity<?> getUserInfo(@PathVariable String id){
+        Optional<User> userOptional = userService.findOne(id);
 
-        return new ResponseEntity<PublicUserInfo>(new PublicUserInfo(user),HttpStatus.OK);
+        if(userOptional.isEmpty() == false){
+            return new ResponseEntity<>(new PublicUserInfo(userOptional.get()),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+
     }
 }

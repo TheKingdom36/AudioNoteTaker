@@ -1,7 +1,9 @@
-package AudioApp.AudioNoteTaker.Services;
+package AudioApp.AudioNoteTaker.Services.Interfaces;
+
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
-
+@Service
 public interface TokenService {
     String permanent(Map<String, String> attributes);
 

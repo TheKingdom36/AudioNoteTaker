@@ -1,9 +1,12 @@
-package AudioApp.AudioNoteTaker.Services;
+package AudioApp.AudioNoteTaker.Services.Interfaces;
+
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public interface CrudService<Item, ID extends Serializable> {
     <S extends Item> S save(S entity);
 

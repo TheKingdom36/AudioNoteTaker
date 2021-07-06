@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.Services;
+package AudioApp.AudioNoteTaker.Services.Auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

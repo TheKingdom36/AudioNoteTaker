@@ -1,15 +1,15 @@
 package AudioApp.AudioNoteTaker.Services;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.Entities.User;
-import AudioApp.AudioNoteTaker.Models.AudioFile;
 import AudioApp.AudioNoteTaker.Models.AudioModel;
-import AudioApp.AudioNoteTaker.Repository.AudioRecordingAudio.AudioRecordingInfoRepository;
+import AudioApp.AudioNoteTaker.Services.Interfaces.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class AudioModelService implements CrudService<AudioModel,Long>{
+public class AudioModelService implements CrudService<AudioModel,Long> {
 
     @Autowired
     AudioFileService audioFileService;
@@ -17,19 +17,35 @@ public class AudioModelService implements CrudService<AudioModel,Long>{
     @Autowired
     AudioRecordingInfoService audioRecordingInfoService;
 
+
     @Override
-    public AudioModel save(AudioModel audioModel) {
+    public <S extends AudioModel> S save(S entity) {
         return null;
     }
 
     @Override
-    public AudioModel find(Long aLong) {
+    public <S extends AudioModel> S update(S entity) {
         return null;
     }
 
     @Override
-    public void update(AudioModel audioModel) {
+    public Optional<AudioModel> findOne(Long aLong) {
+        return Optional.empty();
+    }
 
+    @Override
+    public boolean existsByUuid(String uuid) {
+        return false;
+    }
+
+    @Override
+    public boolean exists(Long aLong) {
+        return false;
+    }
+
+    @Override
+    public long count() {
+        return 0;
     }
 
     @Override
@@ -37,6 +53,23 @@ public class AudioModelService implements CrudService<AudioModel,Long>{
 
     }
 
+    @Override
+    public void delete(AudioModel entity) {
 
+    }
 
+    @Override
+    public int delete(List<AudioModel> entityList) {
+        return 0;
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
+    public Class<AudioModel> getEntityClass() {
+        return null;
+    }
 }

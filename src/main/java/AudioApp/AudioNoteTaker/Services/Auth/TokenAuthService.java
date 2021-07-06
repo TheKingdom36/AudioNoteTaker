@@ -1,6 +1,8 @@
-package AudioApp.AudioNoteTaker.Services;
+package AudioApp.AudioNoteTaker.Services.Auth;
 
-public class TokenAuthService implements UserAuthService{
+import AudioApp.AudioNoteTaker.Services.Interfaces.UserAuthService;
+
+public class TokenAuthService implements UserAuthService {
    /* @NonNull
     TokenService tokens;
     @NonNull

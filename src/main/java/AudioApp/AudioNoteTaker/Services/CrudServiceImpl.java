@@ -1,17 +1,20 @@
 package AudioApp.AudioNoteTaker.Services;
 
+import AudioApp.AudioNoteTaker.Services.Interfaces.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
+import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-abstract class CommonCrudService implements JpaRepository {
+@Service
+public class CrudServiceImpl<Item,ID extends Serializable, Repository extends JpaRepositoryImplementation<Item,ID>> implements CrudService<Item,ID> {
 
     @Autowired
-    protected Repo repo;
+    Repository repository;
+
 
     @Override
     public <S extends Item> S save(S entity) {
@@ -24,7 +27,7 @@ abstract class CommonCrudService implements JpaRepository {
     }
 
     @Override
-    public Optional<Item> findOne(String id) {
+    public Optional<Item> findOne(ID id) {
         return Optional.empty();
     }
 
@@ -34,7 +37,7 @@ abstract class CommonCrudService implements JpaRepository {
     }
 
     @Override
-    public boolean exists(String id) {
+    public boolean exists(ID id) {
         return false;
     }
 
@@ -44,7 +47,7 @@ abstract class CommonCrudService implements JpaRepository {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(ID id) {
 
     }
 
@@ -63,5 +66,8 @@ abstract class CommonCrudService implements JpaRepository {
 
     }
 
-
+    @Override
+    public Class<Item> getEntityClass() {
+        return null;
+    }
 }

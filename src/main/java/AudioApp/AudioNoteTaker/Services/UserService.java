@@ -1,18 +1,13 @@
 package AudioApp.AudioNoteTaker.Services;
 
 import AudioApp.AudioNoteTaker.Builders.UserBuilder;
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.Entities.User;
 import AudioApp.AudioNoteTaker.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class UserService extends CommonCrudService<User, UserRepository> {
+public class UserService extends CrudServiceImpl<User,String, UserRepository> {
 
 
     @Autowired
