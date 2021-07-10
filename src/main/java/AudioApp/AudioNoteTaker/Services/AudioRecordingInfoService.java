@@ -14,7 +14,7 @@ import java.util.Optional;
 public class AudioRecordingInfoService implements CrudService<AudioRecordingInfo,String> {
 
     @Autowired
-    private AudioRecordingInfoRepository audioRecordingInfoRepository;
+    AudioRecordingInfoRepository audioRecordingInfoRepository;
 
     @Override
     public AudioRecordingInfo save(AudioRecordingInfo audioRecordingInfo) {
@@ -66,9 +66,11 @@ public class AudioRecordingInfoService implements CrudService<AudioRecordingInfo
     }
 
     @Override
-    public void delete(List<AudioRecordingInfo> entityList) {
+    public int delete(List<AudioRecordingInfo> entityList) {
 
         audioRecordingInfoRepository.deleteAllInBatch(entityList);
+
+        return 0;
     }
 
     @Override

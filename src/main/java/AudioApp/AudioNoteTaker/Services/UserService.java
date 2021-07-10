@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-<<<<<<< Updated upstream
 public class UserService extends CrudServiceImpl<User,String, UserRepository> {
-=======
-public class UserService extends CrudServiceImpl<User,Long, UserRepository> {
->>>>>>> Stashed changes
 
 
     @Autowired

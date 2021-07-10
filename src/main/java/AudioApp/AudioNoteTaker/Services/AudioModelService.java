@@ -19,20 +19,9 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
 
 
     @Override
-<<<<<<< Updated upstream
     public <S extends AudioModel> S save(S entity) {
-=======
-    public AudioModel save(AudioModel audioModel) {
-
-        audioRecordingInfoService.save(audioModel.getAudioRecordingInfo());
-
-        audioFileService
-
-
->>>>>>> Stashed changes
         return null;
     }
-
 
     @Override
     public <S extends AudioModel> S update(S entity) {
@@ -43,7 +32,6 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
     public Optional<AudioModel> findOne(Long aLong) {
         return Optional.empty();
     }
-<<<<<<< Updated upstream
 
     @Override
     public boolean existsByUuid(String uuid) {
@@ -51,15 +39,6 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
     }
 
     @Override
-=======
-
-    @Override
-    public boolean existsByUuid(String uuid) {
-        return false;
-    }
-
-    @Override
->>>>>>> Stashed changes
     public boolean exists(Long aLong) {
         return false;
     }
@@ -78,7 +57,6 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
     public void delete(AudioModel entity) {
 
     }
-<<<<<<< Updated upstream
 
     @Override
     public int delete(List<AudioModel> entityList) {
@@ -87,23 +65,10 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
 
     @Override
     public void deleteAll() {
-=======
-
-    @Override
-    public void delete(List<AudioModel> entityList) {
->>>>>>> Stashed changes
 
     }
 
     @Override
-<<<<<<< Updated upstream
-=======
-    public void deleteAll() {
-
-    }
-
-    @Override
->>>>>>> Stashed changes
     public Class<AudioModel> getEntityClass() {
         return null;
     }
