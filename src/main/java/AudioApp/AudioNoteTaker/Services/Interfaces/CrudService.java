@@ -24,7 +24,7 @@ public interface CrudService<Item, ID extends Serializable> {
 
     void delete(Item entity);
 
-    int delete(List<Item> entityList);
+    void delete(List<Item> entityList);
 
     void deleteAll();
 
