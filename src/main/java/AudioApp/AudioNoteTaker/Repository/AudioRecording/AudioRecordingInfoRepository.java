@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AudioRecordingInfoRepository extends JpaRepository<AudioRecordingInfo, String> ,JpaSpecificationExecutor<User> {
+public interface AudioRecordingInfoRepository extends JpaRepository<AudioRecordingInfo, Long> ,JpaSpecificationExecutor<AudioRecordingInfo> {
 
 }

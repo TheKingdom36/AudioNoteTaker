@@ -17,9 +17,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserInfo(@PathVariable String id){
-        Optional<User> userOptional = userService.findOne(id);
+        Optional<User> userOptional = userService.findById(id);
 
         if(userOptional.isEmpty() == false){
             return new ResponseEntity<>(new PublicUserInfo(userOptional.get()),HttpStatus.OK);

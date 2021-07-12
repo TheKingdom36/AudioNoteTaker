@@ -5,6 +5,7 @@ import AudioApp.AudioNoteTaker.Entities.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter @Setter
@@ -16,7 +17,7 @@ public class PublicUserInfo {
 
     private String lastName;
 
-    private Date joinedDate;
+    private LocalDateTime joinedDateTime;
 
     private String email;
 
@@ -24,7 +25,7 @@ public class PublicUserInfo {
         this.ID = user.getID();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.joinedDate = user.getJoinedDate();
+        this.joinedDateTime = user.getJoinedDate();
         this.email = user.getEmail();
     }
 

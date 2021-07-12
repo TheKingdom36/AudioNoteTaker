@@ -3,6 +3,7 @@ package AudioApp.AudioNoteTaker.Services;
 
 import AudioApp.AudioNoteTaker.DataStroage.DataStorageProvider;
 import AudioApp.AudioNoteTaker.Services.Interfaces.DataStorageService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public class DataStorageServiceImpl implements DataStorageService {
      * @return
      */
     @Override
-    public byte[] findOne(String fileName, String dirName) {
+    public byte[] findOne(String fileName, String dirName) throws NotFoundException {
 
         byte[] bytes;
         
@@ -61,10 +62,8 @@ public class DataStorageServiceImpl implements DataStorageService {
             bytes = dataStorageProvider.findOne(fileName,dirName);
             return bytes;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new NotFoundException("Data with provided fileName and dirName could not be found");
         }
-        
-        return null;
         
     }
 
@@ -81,7 +80,11 @@ public class DataStorageServiceImpl implements DataStorageService {
 
         for (Map.Entry<String,String> entry: fileDirMap.entrySet()
         ) {
-            files.add(findOne(entry.getKey(),entry.getValue()));
+            try {
+                files.add(findOne(entry.getKey(),entry.getValue()));
+            } catch (NotFoundException e) {
+
+            }
         }
 
         return files;

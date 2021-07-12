@@ -12,7 +12,7 @@ public interface CrudService<Item, ID extends Serializable> {
 
     <S extends Item> S update(S entity);
 
-    Optional<Item> findOne(ID id);
+    Optional<Item> findById(ID id);
 
     boolean existsByUuid(String uuid);
 
@@ -24,7 +24,7 @@ public interface CrudService<Item, ID extends Serializable> {
 
     void delete(Item entity);
 
-    int delete(List<Item> entityList);
+    void delete(List<Item> entityList);
 
     void deleteAll();
 

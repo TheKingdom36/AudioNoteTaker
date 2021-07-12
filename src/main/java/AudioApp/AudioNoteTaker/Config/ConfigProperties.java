@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @ConfigurationProperties(prefix = "storage")
-@PropertySource("classpath:storageconfig.properties")
+@PropertySource("classpath:storageConfig.properties")
 @Configuration
 public class ConfigProperties {
 

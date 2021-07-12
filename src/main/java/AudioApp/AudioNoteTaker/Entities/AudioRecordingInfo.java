@@ -15,7 +15,7 @@ import java.util.List;
 public class AudioRecordingInfo implements Dao {
     @Id
     @Column(name="audio_id")
-    private long id;
+    private Long id;
 
     private String name;
 

@@ -1,6 +1,7 @@
 package AudioApp.AudioNoteTaker.Services.Interfaces;
 
 
+import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -17,7 +18,7 @@ public interface DataStorageService {
 
     void deleteAll(String dirName);
 
-    byte[] findOne(String fileName, String dir);
+    byte[] findOne(String fileName, String dir) throws NotFoundException;
 
     List<byte[]> find(Map<String,String> fileDirNames);
 

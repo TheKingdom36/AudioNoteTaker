@@ -5,7 +5,18 @@ import lombok.Data;
 
 @Data
 public class AudioModel {
-    private AudioFile audioFile;
+    private byte[] audioData;
 
     private AudioRecordingInfo audioRecordingInfo;
+
+    public AudioModel(){
+
+    }
+
+    public AudioModel(AudioRecordingInfo info, byte[] audioData){
+        this.audioData = audioData;
+        this.audioRecordingInfo = info;
+    }
+
+
 }

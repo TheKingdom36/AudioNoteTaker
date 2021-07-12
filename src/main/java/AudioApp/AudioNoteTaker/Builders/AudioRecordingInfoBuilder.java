@@ -49,6 +49,10 @@ public class AudioRecordingInfoBuilder {
 
     public AudioRecordingInfoBuilder setDateRecorded(Date dateRecorded) {
         this.dateRecorded = dateRecorded;
+
+        //TODO
+
+        return null;
     }
 
     public AudioRecordingInfoBuilder setSize(long size) {
