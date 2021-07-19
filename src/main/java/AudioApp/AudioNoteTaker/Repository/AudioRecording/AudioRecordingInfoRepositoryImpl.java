@@ -1,11 +1,9 @@
 package AudioApp.AudioNoteTaker.Repository.AudioRecording;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.Utils.ZonedDateTimeRange;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class AudioRecordingInfoRepositoryImpl implements AudioRepositoryCustom {

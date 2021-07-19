@@ -1,10 +1,10 @@
 package AudioApp.AudioNoteTaker.Builders;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.Entities.Tag;
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.Tag;
+import AudioApp.AudioNoteTaker.DAOs.User;
 
-import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,9 +15,12 @@ public class AudioRecordingInfoBuilder {
     private String name;
     private User user;
     private List<Tag> tags;
-    private Date dateRecorded;
+    private LocalDate dateRecorded;
     private long size;
-    private long length;
+    private float length;
+    private String fileType;
+
+
 
     public void setId(long id) {
         this.id = id;
@@ -41,18 +44,23 @@ public class AudioRecordingInfoBuilder {
         return this;
     }
 
+    public AudioRecordingInfoBuilder setContentType(String fileType){
+        this.fileType = fileType;
+        return this;
+    }
+
     public AudioRecordingInfoBuilder withTags(List<Tag> tags) {
         this.tags = tags;
 
         return this;
     }
 
-    public AudioRecordingInfoBuilder setDateRecorded(Date dateRecorded) {
+    public AudioRecordingInfoBuilder setDateRecorded(LocalDate dateRecorded) {
         this.dateRecorded = dateRecorded;
 
         //TODO
 
-        return null;
+        return this;
     }
 
     public AudioRecordingInfoBuilder setSize(long size) {
@@ -61,7 +69,7 @@ public class AudioRecordingInfoBuilder {
         return this;
     }
 
-    public AudioRecordingInfoBuilder setLength(long length) {
+    public AudioRecordingInfoBuilder setLength(float length) {
         this.length = length;
 
         return this;

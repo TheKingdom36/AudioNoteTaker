@@ -2,7 +2,7 @@ package AudioApp.AudioNoteTaker.Controllers;
 
 
 import AudioApp.AudioNoteTaker.Models.PublicUserInfo;
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.User;
 import AudioApp.AudioNoteTaker.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

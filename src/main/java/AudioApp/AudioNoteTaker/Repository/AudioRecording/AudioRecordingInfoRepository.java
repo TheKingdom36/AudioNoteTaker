@@ -1,7 +1,6 @@
 package AudioApp.AudioNoteTaker.Repository.AudioRecording;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

@@ -1,15 +1,24 @@
 package AudioApp.AudioNoteTaker.Services;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.Builders.AudioRecordingInfoBuilder;
+import AudioApp.AudioNoteTaker.Controllers.AudioController;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.Models.AudioModel;
 import AudioApp.AudioNoteTaker.Repository.AudioRecording.AudioRecordingInfoRepository;
 import AudioApp.AudioNoteTaker.Services.Interfaces.CrudService;
 import javassist.NotFoundException;
+import lombok.Getter;
+import lombok.Setter;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.audio.mp4.Mp4AudioHeader;
+import org.jaudiotagger.tag.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +30,40 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
 
     @Autowired
     AudioRecordingInfoRepository audioRecordingInfoRepo;
+
+    @Autowired
+    DateTimeService dateTimeService;
+
+
+    /*
+    Just supports mp4 compatible files
+     */
+    public AudioMetadata generateAudioFileMetadata(String fileName,File audioFile){
+
+        AudioRecordingInfoBuilder builder = new AudioRecordingInfoBuilder();
+        AudioFile audiofile = null;
+        Tag tag = null;
+        Mp4AudioHeader audioHeader=null;
+
+        try {
+            audiofile = AudioFileIO.read(audioFile);
+            tag = audiofile.getTag();
+            audioHeader= (Mp4AudioHeader) audiofile.getAudioHeader();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            // After operating the above files, you need to delete the temporary files generated in the root directory
+            File f = new File(audioFile.toURI());
+            f.delete();
+        }
+
+
+        return new AudioMetadata(audioHeader);
+
+    }
+
 
     @Override
     public <S extends AudioModel> S save(S entity) {
@@ -69,7 +112,6 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
 
 
         AudioModel model = new AudioModel();
-        byte[] audioData;
         Optional<AudioRecordingInfo> infoOptional = audioRecordingInfoRepo.findById(ID);
         Optional<AudioModel> modelOptional;
 
@@ -135,5 +177,20 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
     @Override
     public Class<AudioModel> getEntityClass() {
         return null;
+    }
+
+    @Getter
+    public static class AudioMetadata{
+
+        String format;
+        float length;
+        Long bitrate;
+
+        public AudioMetadata(Mp4AudioHeader header){
+            this.format = header.getFormat();
+            this.length = header.getPreciseLength();
+            this.bitrate = header.getBitRateAsNumber();
+
+        }
     }
 }

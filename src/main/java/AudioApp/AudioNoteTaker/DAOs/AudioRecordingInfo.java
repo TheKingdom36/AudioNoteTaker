@@ -1,11 +1,13 @@
-package AudioApp.AudioNoteTaker.Entities;
+package AudioApp.AudioNoteTaker.DAOs;
 
-import AudioApp.AudioNoteTaker.DAO.Dao;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -21,15 +23,19 @@ public class AudioRecordingInfo implements Dao {
 
     @ManyToOne
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "USER_ID_FK"))
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "audioInfo")
+    @JsonIgnore
     private List<Tag> tags;
 
-    private Date dateRecorded;
+    private LocalDate dateRecorded;
 
     private long size;
 
-    private long length;
+    private float length;
+
+    private String filetype;
 
 }

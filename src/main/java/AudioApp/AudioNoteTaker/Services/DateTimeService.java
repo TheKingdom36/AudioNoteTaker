@@ -2,14 +2,20 @@ package AudioApp.AudioNoteTaker.Services;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
-public class DateService {
+public class DateTimeService {
 
-    public LocalDateTime now() {
+    public LocalDateTime nowDateTime() {
         return LocalDateTime.now();
     }
+
+    public LocalDate nowDate() {
+        return LocalDate.now();
+    }
+
 }
 
 

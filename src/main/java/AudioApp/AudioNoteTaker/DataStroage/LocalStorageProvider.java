@@ -38,7 +38,6 @@ public class LocalStorageProvider implements DataStorageProvider {
         File file = new File(basePath+"/"+dir+"/"+filename);
         File dirFolder = new File(basePath+"/"+dir);
 
-
         if(dirFolder.exists() == false){
 
             mkdir(dir);
@@ -63,6 +62,7 @@ public class LocalStorageProvider implements DataStorageProvider {
     public byte[] findOne(String filename, String dir) throws IOException {
 
         File file = new File(basePath+"/"+dir+"/"+filename);
+        System.out.println(basePath+"/"+dir+"/"+filename);
 
         if(file.exists()==false){
             throw new IOException("File does not exist");

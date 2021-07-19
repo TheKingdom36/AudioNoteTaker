@@ -1,12 +1,11 @@
 package AudioApp.AudioNoteTaker.Models;
 
 
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter @Setter
 public class PublicUserInfo {

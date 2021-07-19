@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.DAO;
+package AudioApp.AudioNoteTaker.DAOs;
 
 import java.util.List;
 import java.util.Optional;

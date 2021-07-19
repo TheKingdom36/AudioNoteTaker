@@ -1,6 +1,6 @@
 package AudioApp.AudioNoteTaker.Repository.User;
 
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

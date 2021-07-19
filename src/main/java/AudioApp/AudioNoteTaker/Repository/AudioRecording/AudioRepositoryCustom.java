@@ -1,6 +1,6 @@
 package AudioApp.AudioNoteTaker.Repository.AudioRecording;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.Utils.ZonedDateTimeRange;
 import org.springframework.data.jpa.domain.Specification;
 

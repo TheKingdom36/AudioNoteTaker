@@ -1,6 +1,8 @@
-package AudioApp.AudioNoteTaker.Entities;
+package AudioApp.AudioNoteTaker.DAOs;
 
-import AudioApp.AudioNoteTaker.DAO.Dao;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,6 +37,7 @@ public class User implements Dao {
     private String password;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<AudioRecordingInfo> audioRecordingInfoSet;
 
 }

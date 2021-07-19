@@ -1,7 +1,7 @@
 package AudioApp.AudioNoteTaker.Services;
 
 import AudioApp.AudioNoteTaker.Builders.UserBuilder;
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.User;
 import AudioApp.AudioNoteTaker.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ public class UserService extends CrudServiceImpl<User,String, UserRepository> {
 
 
     @Autowired
-    DateService dateService;
+    DateTimeService dateService;
 
 
     public UserService(){
@@ -23,7 +23,7 @@ public class UserService extends CrudServiceImpl<User,String, UserRepository> {
         User newUser = UserBuilder.newBuilder()
                 .setName(firstname,lastname)
                 .setEmail(email)
-                .setJoinedDate(dateService.now())
+                .setJoinedDate(dateService.nowDateTime())
                 .setPassword(password).build();
 
         return newUser;

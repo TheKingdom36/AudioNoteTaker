@@ -1,13 +1,9 @@
 package AudioApp.AudioNoteTaker.Builders;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.Entities.User;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.User;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,6 +1,6 @@
 package AudioApp.AudioNoteTaker.Models;
 
-import AudioApp.AudioNoteTaker.Entities.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import lombok.Data;
 
 @Data
