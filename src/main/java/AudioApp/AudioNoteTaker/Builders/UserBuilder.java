@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UserBuilder {
-    private long ID;
     private String firstName;
     private String lastName;
     private LocalDateTime joinedDate;
@@ -32,7 +31,7 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setPassword(String Password){
+    public UserBuilder setPassword(String password){
         this.password = password;
         return this;
     }
@@ -63,11 +62,9 @@ public class UserBuilder {
 
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setEmail(email);
         user.setJoinedDate(joinedDate);
-        user.setPassword(password);
         user.setAudioRecordingInfoSet(audioRecordingInfoSet);
-
+        user.setPassword(password);
 
         return user;
     }

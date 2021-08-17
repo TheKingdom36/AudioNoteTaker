@@ -4,28 +4,36 @@ import AudioApp.AudioNoteTaker.Builders.UserBuilder;
 import AudioApp.AudioNoteTaker.DAOs.User;
 import AudioApp.AudioNoteTaker.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService extends CrudServiceImpl<User,String, UserRepository> {
+public class UserService extends CrudServiceImpl<User, Long> {
 
 
     @Autowired
     DateTimeService dateService;
 
+    @Autowired
+    UserDetailsService userDetailsService;
 
     public UserService(){
 
     }
 
-    public User create(String firstname,String lastname,String email, String password){
+    public User RegisterNewUser(String firstname,String lastname,String email,String password){
+
+
+        System.out.println(password);
 
         User newUser = UserBuilder.newBuilder()
                 .setName(firstname,lastname)
                 .setEmail(email)
                 .setJoinedDate(dateService.nowDateTime())
                 .setPassword(password).build();
-
+        System.out.println(newUser.getPassword());
         return newUser;
     }
 
@@ -35,4 +43,5 @@ public class UserService extends CrudServiceImpl<User,String, UserRepository> {
     public Class<User> getEntityClass() {
         return null;
     }
+
 }

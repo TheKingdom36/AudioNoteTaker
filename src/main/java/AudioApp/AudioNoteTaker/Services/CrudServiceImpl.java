@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public abstract class CrudServiceImpl<Item,ID extends Serializable, Repository extends CrudRepository<Item,ID>> implements CrudService<Item,ID> {
+public abstract class CrudServiceImpl<Item,ID extends Serializable> implements CrudService<Item,ID> {
 
     @Autowired
-    Repository repository;
+    CrudRepository<Item,ID> repository;
 
 
     @Override

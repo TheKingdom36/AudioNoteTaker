@@ -25,7 +25,7 @@ public class PublicUserInfo {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.joinedDateTime = user.getJoinedDate();
-        this.email = user.getEmail();
+
     }
 
     public PublicUserInfo(){

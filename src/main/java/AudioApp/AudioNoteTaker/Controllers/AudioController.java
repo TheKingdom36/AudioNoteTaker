@@ -2,7 +2,7 @@ package AudioApp.AudioNoteTaker.Controllers;
 
 
 import AudioApp.AudioNoteTaker.Builders.AudioRecordingInfoBuilder;
-import AudioApp.AudioNoteTaker.Controllers.ReponseRequests.ListAudioRecordingRequest;
+import AudioApp.AudioNoteTaker.Controllers.ReponseRequests.Recording.ListAudioRecordingRequest;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.DAOs.Tag;
 import AudioApp.AudioNoteTaker.Models.AudioModel;
@@ -87,9 +87,9 @@ public class AudioController {
     }
 
 
-    @PostMapping("/{filename}")
+    @PostMapping("")
     public ResponseEntity<?> store(@PathVariable(value = "filename") String file_name,@RequestParam("Tag") List<Tag> tags,@RequestParam("file") MultipartFile file) throws IOException, UnsupportedAudioFileException {
-
+//TODO
         AudioModelService.AudioMetadata metadata = audioModelService.generateAudioFileMetadata(file.getName(), FileUtils.convertMultipartFileToFile(file));
 
         AudioRecordingInfoBuilder builder = new AudioRecordingInfoBuilder();
@@ -126,10 +126,5 @@ public class AudioController {
 
         return new ResponseEntity<List<AudioRecordingInfo>>(resultList,HttpStatus.OK);
     }
-
-
-
-
-
 
 }

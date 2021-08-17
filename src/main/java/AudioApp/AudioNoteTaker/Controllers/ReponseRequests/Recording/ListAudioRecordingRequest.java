@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.Controllers.ReponseRequests;
+package AudioApp.AudioNoteTaker.Controllers.ReponseRequests.Recording;
 
 import lombok.Data;
 import lombok.Getter;
