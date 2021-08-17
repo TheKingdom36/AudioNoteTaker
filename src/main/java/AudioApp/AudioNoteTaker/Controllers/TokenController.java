@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +25,22 @@ public class TokenController {
     @Autowired
     JWTService jwtService;
 
-    @Autowired
-    SecurityContext context;
 
-    @Autowired
-    UserDetailsService userDetailsService;
+
 
     @GetMapping("/token")
     public ResponseEntity<String> getToken(){
-System.out.println(context.getAuthentication().getName());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
        // UserDetails userDetails = userDetailsService.loadUserByUsername();
 
 
-        return new ResponseEntity<String>(jwtService.getJWTToken(null) , HttpStatus.OK);
+        return new ResponseEntity<String>(jwtService.getJWTToken(username) , HttpStatus.OK);
     }
 
 

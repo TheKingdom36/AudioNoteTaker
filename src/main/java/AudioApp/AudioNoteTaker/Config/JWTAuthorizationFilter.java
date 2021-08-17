@@ -9,16 +9,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.DefaultJwtParserBuilder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import static AudioApp.AudioNoteTaker.Config.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
@@ -39,6 +37,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             }else {
                 SecurityContextHolder.clearContext();
             }
+
+            response.addHeader("Authorization",request.getHeader("Authorization"));
+
             chain.doFilter(request, response);
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -49,7 +50,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private Claims validateToken(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
+
+        JwtParserBuilder builder = new DefaultJwtParserBuilder();
+
+        JwtParser parser = builder.setSigningKey(KEY.getBytes()).build();
+
+        return parser.parseClaimsJws(jwtToken).getBody();
     }
 
     /**

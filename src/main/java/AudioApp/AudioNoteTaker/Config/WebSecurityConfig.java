@@ -17,14 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import static AudioApp.AudioNoteTaker.Config.SecurityConstants.*;
 
 import javax.sql.DataSource;
 
@@ -32,42 +27,14 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/User/**")
-    );
-
-
-
-
-
-
-    @Override
-    public void configure(final WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/token/**").antMatchers("/User/**");
-    }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/token").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.GET, "/token").authenticated().and().httpBasic();
+
     }
 
-    @Bean
-    AuthenticationFilter authenticationFilter() throws Exception {
-        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
-        filter.setAuthenticationManager(authenticationManager());
-        //filter.setAuthenticationSuccessHandler(successHandler());
-        return filter;
-    }
-
-    @Bean
-    AuthenticationEntryPoint forbiddenEntryPoint() {
-        return new HttpStatusEntryPoint(HttpStatus.FORBIDDEN);
-    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -83,8 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authentication.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select username,password,enabled "
-                + "from users "
-                + "where username = ?")
+                        + "from users "
+                        + "where username = ?")
                 .authoritiesByUsernameQuery("select username,authority "
                         + "from authorities "
                         + "where username = ?").passwordEncoder(new BCryptPasswordEncoder());
@@ -97,5 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService(AuthenticationManagerBuilder builder) {
         return builder.getDefaultUserDetailsService();
     }
+
+
 
 }

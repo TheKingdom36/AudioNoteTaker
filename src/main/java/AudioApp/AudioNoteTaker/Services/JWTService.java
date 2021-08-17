@@ -18,15 +18,14 @@ public class JWTService {
 
 
 
-    public String getJWTToken(User user) {
+    public String getJWTToken(String username) {
         String secretKey = KEY;
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList("USER");
 
         String token = Jwts
                 .builder()
-                .setId(String.valueOf(user.getID()))
-                .setSubject(user.getUsername())
+                .setSubject(username)
                 .claim("authorities",
                         grantedAuthorities.stream()
                                 .map(GrantedAuthority::getAuthority)
