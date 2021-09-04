@@ -19,7 +19,7 @@ import java.util.Set;
         uniqueConstraints = @UniqueConstraint(columnNames = {"USERNAME"})
 )
 
-//TODO implement this
+
 public class User implements UserDetails {
 
     @Id

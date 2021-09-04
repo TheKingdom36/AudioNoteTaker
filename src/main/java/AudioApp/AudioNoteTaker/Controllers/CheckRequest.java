@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.Controllers.ReponseRequests.Recording;
+package AudioApp.AudioNoteTaker.Controllers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,20 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class RecordingStoreRequest {
-
-
-    String file_name;
+public class CheckRequest {
+    String name;
 
     List<String> tags;
 
     MultipartFile file;
 
-    public RecordingStoreRequest(){
-        file_name = "New recording";
-
+    public CheckRequest(){
+        name = "default";
         tags = new ArrayList<>();
-
-        file =null;
     }
 }

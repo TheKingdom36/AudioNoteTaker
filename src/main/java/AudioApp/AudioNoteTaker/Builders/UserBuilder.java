@@ -14,6 +14,7 @@ public class UserBuilder {
     private String email;
     private String password;
     private Set<AudioRecordingInfo> audioRecordingInfoSet;
+    private String username;
 
     public UserBuilder(){
 

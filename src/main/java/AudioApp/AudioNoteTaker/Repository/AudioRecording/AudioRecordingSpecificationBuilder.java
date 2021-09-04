@@ -2,7 +2,7 @@ package AudioApp.AudioNoteTaker.Repository.AudioRecording;
 
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo_;
-import AudioApp.AudioNoteTaker.DAOs.Tag_;
+import AudioApp.AudioNoteTaker.DAOs.AudioTag_;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -24,18 +24,7 @@ public class AudioRecordingSpecificationBuilder {
             @Override
             public Predicate toPredicate(Root<AudioRecordingInfo> root,CriteriaQuery<?> query,CriteriaBuilder cb){
 
-                Predicate predicate = root.join(AudioRecordingInfo_.tags).get(Tag_.name).in(tags);
-                //EntityType<AudioRecordingInfo> AudioRecordingInfo_ = root.getModel();
-
-                //((CriteriaQuery<AudioRecordingInfo>)query).select(root.join("tags")).where();
-                //query.
-                /*
-                Join<AudioRecordingInfo,Tag> groupJoin = root.join("tags");
-
-                Expression<String> expression = groupJoin.get("name");
-
-                Predicate predicate = expression.in(tags);
-*/
+                Predicate predicate = root.join(AudioRecordingInfo_.audioTags).get(AudioTag_.name).in(tags);
                 return predicate;
 
             }
@@ -59,5 +48,9 @@ public class AudioRecordingSpecificationBuilder {
     }
 
 
+    public static Specification<AudioRecordingInfo> hasUserId(Long UserId) {
+        return (Specification<AudioRecordingInfo>) (root ,query ,cb) -> cb.equal(root.get(AudioRecordingInfo_.ID),UserId);
+
+    }
 
 }

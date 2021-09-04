@@ -35,6 +35,8 @@ String username;
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
+            System.out.println(principal.toString());
+
             username = principal.toString();
         }
        // UserDetails userDetails = userDetailsService.loadUserByUsername();

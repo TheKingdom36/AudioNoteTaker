@@ -1,7 +1,11 @@
 package AudioApp.AudioNoteTaker.Services;
 
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.Repository.BaseRepository;
 import AudioApp.AudioNoteTaker.Services.Interfaces.CrudService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +17,7 @@ import java.util.Optional;
 public abstract class CrudServiceImpl<Item,ID extends Serializable> implements CrudService<Item,ID> {
 
     @Autowired
-    CrudRepository<Item,ID> repository;
+    BaseRepository<Item,ID> repository;
 
 
     @Override
@@ -33,8 +37,8 @@ public abstract class CrudServiceImpl<Item,ID extends Serializable> implements C
     }
 
     @Override
-    public Optional<Item> findById(ID id) {
-        return repository.findById(id);
+    public Item findById(ID id) {
+        return repository.findById(id).orElseThrow();
     }
 
     @Override
@@ -74,6 +78,8 @@ public abstract class CrudServiceImpl<Item,ID extends Serializable> implements C
     public void deleteAll() {
         repository.deleteAll();
     }
+
+
 
 
 }

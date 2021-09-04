@@ -1,13 +1,18 @@
 package AudioApp.AudioNoteTaker.Services;
 
 import AudioApp.AudioNoteTaker.Builders.UserBuilder;
+import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.DAOs.User;
 import AudioApp.AudioNoteTaker.Repository.User.UserRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService extends CrudServiceImpl<User, Long> {
@@ -16,11 +21,7 @@ public class UserService extends CrudServiceImpl<User, Long> {
     @Autowired
     DateTimeService dateService;
 
-    @Autowired
-    UserDetailsService userDetailsService;
-
     public UserService(){
-
     }
 
     public User RegisterNewUser(String firstname,String lastname,String email,String password){
@@ -38,9 +39,19 @@ public class UserService extends CrudServiceImpl<User, Long> {
     }
 
 
+    public List<User> findBySpec(Specification<User> specification) throws NotFoundException {
+
+
+        List<User> userList = repository.findAll(specification);
+
+        return userList;
+    }
+
 
     @Override
     public Class<User> getEntityClass() {
+
+        System.out.println(repository.toString());
         return null;
     }
 

@@ -16,6 +16,7 @@ import java.util.Optional;
 @Data
 public class ListAudioRecordingRequest {
 
+    String name;
 
     List<String> tags;
 
@@ -26,7 +27,8 @@ public class ListAudioRecordingRequest {
     public ListAudioRecordingRequest(){
         beginDate =  "1900-12-27";
         endDate = "2900-12-27";
-
+        name = "";
+        tags =  new ArrayList<>();
     }
 
 }

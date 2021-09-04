@@ -19,9 +19,9 @@ public class DataStorageServiceImpl implements DataStorageService {
     protected DataStorageProvider dataStorageProvider;
 
     @Override
-    public void save(byte[] fileData,String filename, String dirName) {
+    public void save(byte[] fileData,String fileName, String dirName) {
         try {
-            dataStorageProvider.save(fileData,filename,dirName);
+            dataStorageProvider.save(fileData,fileName,dirName);
         } catch (IOException e) {
             e.printStackTrace();
         }

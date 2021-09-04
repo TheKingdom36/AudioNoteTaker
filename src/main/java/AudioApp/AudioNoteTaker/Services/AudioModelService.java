@@ -1,29 +1,42 @@
 package AudioApp.AudioNoteTaker.Services;
 
 import AudioApp.AudioNoteTaker.Builders.AudioRecordingInfoBuilder;
-import AudioApp.AudioNoteTaker.Controllers.AudioController;
+import AudioApp.AudioNoteTaker.Controllers.RecordingUpdateRequest;
+import AudioApp.AudioNoteTaker.Controllers.ReponseRequests.Recording.ListAudioRecordingRequest;
+import AudioApp.AudioNoteTaker.Controllers.ReponseRequests.Recording.RecordingDeleteRequest;
+import AudioApp.AudioNoteTaker.Controllers.ReponseRequests.Recording.RecordingStoreRequest;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.AudioTag;
 import AudioApp.AudioNoteTaker.Models.AudioModel;
 import AudioApp.AudioNoteTaker.Repository.AudioRecording.AudioRecordingInfoRepository;
-import AudioApp.AudioNoteTaker.Services.Interfaces.CrudService;
+import AudioApp.AudioNoteTaker.Services.Auth.LoggedInUser;
+import AudioApp.AudioNoteTaker.Utils.FileUtils;
 import javassist.NotFoundException;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.SneakyThrows;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.mp4.Mp4AudioHeader;
 import org.jaudiotagger.tag.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
+
+import static AudioApp.AudioNoteTaker.Repository.AudioRecording.AudioRecordingSpecificationBuilder.hasUserId;
+import static AudioApp.AudioNoteTaker.Repository.AudioRecording.AudioRecordingSpecificationBuilder.withinDateRange;
 
 @Service
-public class AudioModelService implements CrudService<AudioModel,Long> {
+public class AudioModelService {
 
     @Autowired
     AudioFileService audioFileService;
@@ -32,8 +45,13 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
     AudioRecordingInfoRepository audioRecordingInfoRepo;
 
     @Autowired
+    LoggedInUser loggedInUser;
+
+    @Autowired
     DateTimeService dateTimeService;
 
+    @Autowired
+    TagService tagService;
 
     /*
     Just supports mp4 compatible files
@@ -64,119 +82,140 @@ public class AudioModelService implements CrudService<AudioModel,Long> {
 
     }
 
+    public AudioRecordingInfo save(RecordingStoreRequest request) throws IOException {
 
-    @Override
-    public <S extends AudioModel> S save(S entity) {
+        byte[] bytes = request.getFile().getBytes();
 
+        File file = FileUtils.convertMultipartFileToFile(request.getFile());
 
-        audioRecordingInfoRepo.save(entity.getAudioRecordingInfo());
+        AudioMetadata metadata = generateAudioFileMetadata(request.getFile_name(), file);
 
-        String fileName = String.valueOf(entity.getAudioRecordingInfo().getId());
-        String directory = String.valueOf(entity.getAudioRecordingInfo().getUser().getID());
+        AudioRecordingInfo info = new AudioRecordingInfoBuilder()
+                .setName(request.getFile_name())
+                .setContentType(metadata.getFormat())
+                .setDateRecorded(dateTimeService.nowDate())
+                .setUser(loggedInUser.getUser())
+                .setLength(metadata.getLength())
+                .setSize(bytes.length)
+                .withTags(new ArrayList<>())
+                .build();
 
-        audioFileService.save(entity.getAudioData(),fileName,directory);
-
-        return entity;
-    }
-
-    @Override
-    public <S extends AudioModel> S update(S entity) {
-        //find current
-        /*audioRecordingInfoService.
-        //reject if updating id
-
-
-
-        //update info
-        audioRecordingInfoService.save(entity.getAudioRecordingInfo());
-        //update data
-
-        String fileName = String.valueOf(entity.getAudioRecordingInfo().getId());
-        String directory = String.valueOf(entity.getAudioRecordingInfo().getUser().getID());
-
-        audioFileService.update(entity.getAudioData(),fileName,directory);
-
-*/
-        return null;
-    }
-
-    public AudioRecordingInfo updateAudioInfo(AudioRecordingInfo info){
+        List<AudioTag> audioTags = tagService.getOrCreateTags(info,request.getTags());
+        info.setAudioTags(audioTags);
 
         audioRecordingInfoRepo.save(info);
+
+        String fileName = String.valueOf(info.getId());
+        String userID = String.valueOf(loggedInUser.getUser().getID());
+
+        audioFileService.save(bytes,fileName,userID);
 
         return info;
     }
 
-    @Override
-    public Optional<AudioModel> findById(Long ID) {
+    public AudioRecordingInfo updateAudioInfo(RecordingUpdateRequest updateRequest) throws Exception {
+
+        AudioRecordingInfo alteredInfo = audioRecordingInfoRepo
+                .findById(updateRequest.getAudioId()).map(audioRecordingInfo -> {
+
+                    if(isValidAudioName(updateRequest.getName())){
+                        audioRecordingInfo.setName(updateRequest.getName());
+                    }
+
+                    audioRecordingInfo.getAudioTags().stream().map(audioTag -> {
+
+                        updateRequest.getDeleteTags().stream().map(audioTagToDeleteString->{
+
+                           if(audioTag.getName() == audioTagToDeleteString){
+                               audioRecordingInfo.getAudioTags().remove(audioTag);
+                           }
+
+                           return audioTagToDeleteString;
+                        });
+
+
+                        return audioTag;
+                    });
+
+            updateRequest.getAddTags().stream().map(audioTagToAddString->{
+                audioRecordingInfo.getAudioTags().add(tagService.getOrCreateTag(audioRecordingInfo,audioTagToAddString));
+                return audioTagToAddString;
+            });
+
+                    return audioRecordingInfo;
+        }).orElseThrow((Supplier<Exception>) () -> new RuntimeException("Could not find audio info"));
+
+        audioRecordingInfoRepo.save(alteredInfo);
+
+        return alteredInfo;
+    }
+
+    private boolean isValidAudioName(String name) {
+        if(name == ""){
+            return false;
+        }
+        return true;
+    }
+
+    public AudioModel findById(Long ID) throws Exception {
 
 
         AudioModel model = new AudioModel();
-        Optional<AudioRecordingInfo> infoOptional = audioRecordingInfoRepo.findById(ID);
-        Optional<AudioModel> modelOptional;
+        AudioRecordingInfo audioInfo =
+                audioRecordingInfoRepo
+                        .findById(ID).map( audioRecordingInfo -> {
+                    if (!audioRecordingInfo.getId().equals(loggedInUser.getUser().getID())) {
+                        throw new AccessDeniedException("Access denied");
+                    }
 
-        if (infoOptional.isEmpty()){
-            return Optional.empty();
-        }else {
-            model.setAudioRecordingInfo(infoOptional.get());
-            try {
-                model.setAudioData(audioFileService.findOne(infoOptional.get().getName(),String.valueOf(infoOptional.get().getId())));
-            } catch (NotFoundException e) {
-                return Optional.empty();
-            }
-            modelOptional = Optional.of(model);
-        }
+                    return audioRecordingInfo;
+                }).orElseThrow((Supplier<Exception>) () -> new RuntimeException("Could not find audio info"));
 
-        return modelOptional;
+        model.setAudioRecordingInfo(audioInfo);
+
+        model.setAudioData(audioFileService.findOne(audioInfo.getName(),String.valueOf(audioInfo.getId())));
+
+        return model;
     }
 
-    public List<AudioRecordingInfo> findBySpec(Specification<AudioRecordingInfo> specification) throws NotFoundException {
+    public List<AudioRecordingInfo> findBySpec(Specification<AudioRecordingInfo> specification) {
 
         List<AudioRecordingInfo> audioRecordingInfoList = audioRecordingInfoRepo.findAll(specification);
 
         return audioRecordingInfoList;
-
     }
 
 
-    @Override
-    public boolean existsByUuid(String uuid) {
-        return false;
+
+    public List<AudioRecordingInfo> findAll(ListAudioRecordingRequest listAudioRecordingRequest) {
+
+        List<String> audioTags = listAudioRecordingRequest.getTags();
+        LocalDate startDate = LocalDate.parse(listAudioRecordingRequest.getBeginDate());
+        LocalDate endDate = LocalDate.parse(listAudioRecordingRequest.getEndDate());
+
+        Specification specification = Specification.where(withinDateRange(startDate,endDate));
+
+        List<AudioRecordingInfo> resultList = findBySpec(Specification
+                .where(withinDateRange(startDate,endDate))
+                .and(hasUserId(loggedInUser.getUser().getID())));
+
+        return resultList;
     }
 
-    @Override
-    public boolean exists(Long ID) {
-        return audioRecordingInfoRepo.existsById(ID);
-    }
+    public RecordingDeleteResponse delete(RecordingDeleteRequest deleteRequest) throws NotFoundException {
 
-    @Override
-    public long count() {
-        return audioRecordingInfoRepo.count();
-    }
+        Optional<AudioRecordingInfo> audioInfoOptional =  audioRecordingInfoRepo.findById(deleteRequest.getAudioId());
 
-    @Override
-    public void delete(Long ID) {
+        if(!audioInfoOptional.isPresent()){
+            throw new NotFoundException("Unable to find the audio file");
+        }
 
-    }
+        audioFileService.delete(String.valueOf(audioInfoOptional.get().getId()),String.valueOf(loggedInUser.getUser().getID()));
 
-    @Override
-    public void delete(AudioModel entity) {
 
-    }
+        audioRecordingInfoRepo.delete(audioInfoOptional.get());
 
-    @Override
-    public void delete(List<AudioModel> entityList) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
-
-    @Override
-    public Class<AudioModel> getEntityClass() {
-        return null;
+        return new RecordingDeleteResponse(audioInfoOptional.get().getId());
     }
 
     @Getter

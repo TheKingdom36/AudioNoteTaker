@@ -29,18 +29,11 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
-    UserDetailsService userDetailsService;
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserInfo(@PathVariable String id){
-        Optional<User> userOptional = userService.findById(Long.parseLong(id));
+        User userOptional = userService.findById(Long.parseLong(id));
 
-        if(userOptional.isEmpty() == false){
-            return new ResponseEntity<>(new PublicUserInfo(userOptional.get()),HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+            return new ResponseEntity<>(new PublicUserInfo(userOptional),HttpStatus.OK);
     }
 
     @PostMapping()
@@ -95,7 +88,9 @@ public class UserController {
 
     @GetMapping("check")
     public String check(){
-        return "hello";
+
+        userService.getEntityClass();
+        return "String";
     }
 
 }

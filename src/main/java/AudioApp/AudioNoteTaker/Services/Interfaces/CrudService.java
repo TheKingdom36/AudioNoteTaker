@@ -1,5 +1,6 @@
 package AudioApp.AudioNoteTaker.Services.Interfaces;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public interface CrudService<Item, ID extends Serializable> {
 
     <S extends Item> S update(S entity);
 
-    Optional<Item> findById(ID id);
+    Item findById(ID id);
 
     boolean existsByUuid(String uuid);
 

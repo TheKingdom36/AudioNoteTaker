@@ -9,9 +9,9 @@ import java.time.ZonedDateTime;
 
 
 public class ZonedDateTimeRange {
-    ZonedDateTime startTime;
-    ZonedDateTime endTime;
-    ZoneId zoneId;
+    final ZonedDateTime startTime;
+    final ZonedDateTime endTime;
+    final ZoneId zoneId;
 
 
     public ZonedDateTimeRange(ZonedDateTime startTime, ZonedDateTime endTime){

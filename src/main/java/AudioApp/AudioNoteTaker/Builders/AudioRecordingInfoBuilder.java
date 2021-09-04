@@ -1,7 +1,7 @@
 package AudioApp.AudioNoteTaker.Builders;
 
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
-import AudioApp.AudioNoteTaker.DAOs.Tag;
+import AudioApp.AudioNoteTaker.DAOs.AudioTag;
 import AudioApp.AudioNoteTaker.DAOs.User;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ public class AudioRecordingInfoBuilder {
     private long id;
     private String name;
     private User user;
-    private List<Tag> tags;
+    private List<AudioTag> audioTags;
     private LocalDate dateRecorded;
     private long size;
     private float length;
@@ -38,7 +38,7 @@ public class AudioRecordingInfoBuilder {
     }
 
     public AudioRecordingInfoBuilder withTags() {
-        this.tags = new ArrayList<>();
+        this.audioTags = new ArrayList<>();
 
         return this;
     }
@@ -48,8 +48,8 @@ public class AudioRecordingInfoBuilder {
         return this;
     }
 
-    public AudioRecordingInfoBuilder withTags(List<Tag> tags) {
-        this.tags = tags;
+    public AudioRecordingInfoBuilder withTags(List<AudioTag> audioTags) {
+        this.audioTags = audioTags;
 
         return this;
     }
@@ -78,7 +78,7 @@ public class AudioRecordingInfoBuilder {
         AudioRecordingInfo info = new AudioRecordingInfo();
 
         info.setId(id);
-        info.setTags(tags);
+        info.setAudioTags(audioTags);
         info.setName(name);
         info.setLength(length);
         info.setDateRecorded(dateRecorded);

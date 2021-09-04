@@ -27,7 +27,7 @@ public class AudioRecordingInfo implements Dao {
 
     @OneToMany(mappedBy = "audioInfo")
     @JsonIgnore
-    private List<Tag> tags;
+    private List<AudioTag> audioTags;
 
     private LocalDate dateRecorded;
 
