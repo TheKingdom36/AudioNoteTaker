@@ -16,6 +16,7 @@ import java.util.List;
 public class AudioRecordingInfo implements Dao {
     @Id
     @Column(name="audio_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -26,10 +27,9 @@ public class AudioRecordingInfo implements Dao {
     private User user;
 
     @OneToMany(mappedBy = "audioInfo")
-    @JsonIgnore
-    private List<AudioTag> audioTags;
+    private List<AudioTag> tags;
 
-    private LocalDate dateRecorded;
+    private LocalDate createdAt;
 
     private long size;
 

@@ -25,10 +25,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests().antMatchers(HttpMethod.GET, "/token").authenticated().and().httpBasic()
                 .and().authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/audio/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/audio/**").authenticated()
-                .antMatchers(HttpMethod.GET,"/User/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/User/**").authenticated();
+                .antMatchers(HttpMethod.GET,"/recording/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/recording/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/user/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/user/**").authenticated();
     }
 
     @Bean
@@ -55,9 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select username,authority "
                         + "from authorities "
                         + "where username = ?").passwordEncoder(new BCryptPasswordEncoder());
-
-
-
     }
 
     @Bean

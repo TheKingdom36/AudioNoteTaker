@@ -36,6 +36,12 @@ public class User implements UserDetails {
     @Column(name="JOINDATE")
     private LocalDateTime joinedDate;
 
+    @Column(name="DISPLAYNAME")
+    private String displayName;
+
+    /**
+     * The username will be the users email
+     */
     @Column(name="USERNAME")
     private String username;
 
