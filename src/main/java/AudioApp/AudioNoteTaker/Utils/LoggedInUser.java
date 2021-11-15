@@ -34,6 +34,7 @@ public class LoggedInUser {
                 username = (String) principal;
             }
 
+
             User user = userService.findBySpec(Specification.where(hasUsername(username))).get(0);
 
 

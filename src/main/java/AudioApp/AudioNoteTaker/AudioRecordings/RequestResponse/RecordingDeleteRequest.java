@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter @Setter
 public class RecordingDeleteRequest {
-    long audioId;
+    long id;
 
-    public RecordingDeleteRequest(long audioId){
-        this.audioId = audioId;
+    public RecordingDeleteRequest(long id){
+        this.id = id;
     }
 }

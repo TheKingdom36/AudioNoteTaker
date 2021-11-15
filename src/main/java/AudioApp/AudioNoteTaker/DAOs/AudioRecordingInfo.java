@@ -3,6 +3,7 @@ package AudioApp.AudioNoteTaker.DAOs;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -27,6 +28,7 @@ public class AudioRecordingInfo implements Dao {
     private User user;
 
     @OneToMany(mappedBy = "audioInfo")
+    @Cascade({org.hibernate.annotations.CascadeType.DELETE,org.hibernate.annotations.CascadeType.PERSIST})
     private List<AudioTag> tags;
 
     private LocalDate createdAt;

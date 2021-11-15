@@ -1,11 +1,9 @@
 package AudioApp.AudioNoteTaker.AudioRecordings;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingUpdateRequest;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.ListAudioRecordingRequest;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingDeleteRequest;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingStoreRequest;
+import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.*;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -49,9 +47,22 @@ public class AudioController {
         return ResponseEntity.ok(audioModelService.save(storeRequest));
     }
 
-    @DeleteMapping(path="")
-    public ResponseEntity<?> delete(RecordingDeleteRequest deleteRequest) throws NotFoundException {
-        return ResponseEntity.ok(audioModelService.delete(deleteRequest));
+    @DeleteMapping(path="/{id}")
+    public ResponseEntity<?> delete(@PathVariable(value = "id") String audioId)  {
+        RecordingDeleteRequest request = new RecordingDeleteRequest(Integer.parseInt(audioId));
+
+        ResponseEntity<?> entity;
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("content-type","application/json");
+            RecordingDeleteResponse response = audioModelService.delete(request);
+            entity = ResponseEntity.ok().body(response);
+
+        } catch (NotFoundException e) {
+            entity = ResponseEntity.notFound().build();
+        }
+        return entity;
     }
 
     @PatchMapping(path="")

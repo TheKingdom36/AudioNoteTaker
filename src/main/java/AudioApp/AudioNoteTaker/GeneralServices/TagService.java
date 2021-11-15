@@ -22,8 +22,7 @@ public class TagService {
 
         List<AudioTag> tagsToReturn = new ArrayList<>();
 
-        for (String tag:audioTags
-             ) {
+        for (String tag:audioTags) {
             Optional<AudioTag> tagOptional = tagRepository.findById(new AudioTagId( audioRecordingInfo.getId(),tag));
 
             if(tagOptional.isPresent()){

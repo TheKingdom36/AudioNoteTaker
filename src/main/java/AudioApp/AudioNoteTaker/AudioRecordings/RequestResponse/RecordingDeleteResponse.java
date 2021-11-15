@@ -1,7 +1,11 @@
 package AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class RecordingDeleteResponse {
-    long id;
+    private long id;
 
     public RecordingDeleteResponse(long id){
         this.id = id;

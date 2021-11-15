@@ -21,7 +21,6 @@ import org.jaudiotagger.audio.mp4.Mp4AudioHeader;
 import org.jaudiotagger.tag.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -100,14 +99,11 @@ public class AudioModelService {
                 .withTags(new ArrayList<>())
                 .build();
 
-        audioRecordingInfoRepo.save(info);
-
-        
+        //The updated audio info is returned by save
+        info = audioRecordingInfoRepo.save(info);
 
         List<AudioTag> audioTags = tagService.getOrCreateTags(info,request.getTags());
         info.setTags(audioTags);
-
-
 
         String fileName = String.valueOf(info.getId());
         String userID = String.valueOf(loggedInUser.getUser().getID());
@@ -168,9 +164,6 @@ public class AudioModelService {
         AudioRecordingInfo audioInfo =
                 audioRecordingInfoRepo
                         .findById(ID).map( audioRecordingInfo -> {
-
-
-
                     if (!(audioRecordingInfo.getUser().getID() ==loggedInUser.getUser().getID())) {
                         throw new AccessDeniedException("Access denied");
                     }
@@ -180,7 +173,9 @@ public class AudioModelService {
 
         model.setAudioRecordingInfo(audioInfo);
 
-        model.setAudioData(audioFileService.findOne(String.valueOf(audioInfo.getId()),String.valueOf(audioInfo.getUser().getID())));
+        //TODO need to remocve the .m4a
+System.out.println(String.valueOf(audioInfo.getId()) + " "+ String.valueOf(audioInfo.getUser().getID()));
+        model.setAudioData(audioFileService.findOne(String.valueOf(audioInfo.getId())+".m4a",String.valueOf(audioInfo.getUser().getID())));
 
         return model;
     }
@@ -215,15 +210,13 @@ public class AudioModelService {
 
     public RecordingDeleteResponse delete(RecordingDeleteRequest deleteRequest) throws NotFoundException {
 
-        Optional<AudioRecordingInfo> audioInfoOptional =  audioRecordingInfoRepo.findById(deleteRequest.getAudioId());
+        Optional<AudioRecordingInfo> audioInfoOptional =  audioRecordingInfoRepo.findById(deleteRequest.getId());
 
         if(!audioInfoOptional.isPresent()){
             throw new NotFoundException("Unable to find the audio file");
         }
 
         audioFileService.delete(String.valueOf(audioInfoOptional.get().getId()),String.valueOf(loggedInUser.getUser().getID()));
-
-
         audioRecordingInfoRepo.delete(audioInfoOptional.get());
 
         return new RecordingDeleteResponse(audioInfoOptional.get().getId());
