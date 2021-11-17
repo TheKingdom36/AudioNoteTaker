@@ -10,7 +10,7 @@
  - Storage of user, audio recording and tag information via a Postgres Database
  - Storage of Audio files via Local Storage 
  
- Folders:
+ Src Folders:
  - AudioRecording: Holds controllers and services which handles Audio information and audio files
  - Config: Holds configuration information for web security and general bean configuration 
  - DAOS: Holds classes to model tables in the database
