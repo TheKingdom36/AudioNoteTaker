@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.AudioRecordings;
+package AudioApp.AudioNoteTaker.AudioRecording;
 
 public class AudioDataStorageService extends DataStorageServiceImpl {
 

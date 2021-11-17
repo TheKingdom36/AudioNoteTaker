@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.GeneralServices;
+package AudioApp.AudioNoteTaker.UtilServices;
 
 import org.springframework.stereotype.Service;
 

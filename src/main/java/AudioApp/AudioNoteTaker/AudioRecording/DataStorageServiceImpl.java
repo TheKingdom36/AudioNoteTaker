@@ -1,8 +1,8 @@
-package AudioApp.AudioNoteTaker.AudioRecordings;
+package AudioApp.AudioNoteTaker.AudioRecording;
 
 
 import AudioApp.AudioNoteTaker.DataStroage.DataStorageProvider;
-import AudioApp.AudioNoteTaker.GeneralServices.Interfaces.DataStorageService;
+import AudioApp.AudioNoteTaker.UtilServices.Interfaces.DataStorageService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

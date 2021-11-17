@@ -1,16 +1,16 @@
-package AudioApp.AudioNoteTaker.AudioRecordings;
+package AudioApp.AudioNoteTaker.AudioRecording;
 
 import AudioApp.AudioNoteTaker.DAOs.Builders.AudioRecordingInfoBuilder;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingUpdateRequest;
-import AudioApp.AudioNoteTaker.GeneralServices.DateTimeService;
-import AudioApp.AudioNoteTaker.GeneralServices.TagService;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.ListAudioRecordingRequest;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingDeleteRequest;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingDeleteResponse;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.RecordingStoreRequest;
+import AudioApp.AudioNoteTaker.AudioRecording.RequestResponse.RecordingUpdateRequest;
+import AudioApp.AudioNoteTaker.UtilServices.DateTimeService;
+import AudioApp.AudioNoteTaker.Tag.TagService;
+import AudioApp.AudioNoteTaker.AudioRecording.RequestResponse.ListAudioRecordingRequest;
+import AudioApp.AudioNoteTaker.AudioRecording.RequestResponse.RecordingDeleteRequest;
+import AudioApp.AudioNoteTaker.AudioRecording.RequestResponse.RecordingDeleteResponse;
+import AudioApp.AudioNoteTaker.AudioRecording.RequestResponse.RecordingStoreRequest;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.DAOs.AudioTag;
-import AudioApp.AudioNoteTaker.AudioRecordings.Repository.AudioRecordingInfoRepository;
+import AudioApp.AudioNoteTaker.AudioRecording.Repository.AudioRecordingInfoRepository;
 import AudioApp.AudioNoteTaker.Utils.LoggedInUser;
 import AudioApp.AudioNoteTaker.Utils.FileUtils;
 import javassist.NotFoundException;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static AudioApp.AudioNoteTaker.AudioRecordings.Repository.AudioRecordingSpecificationBuilder.*;
+import static AudioApp.AudioNoteTaker.AudioRecording.Repository.AudioRecordingSpecificationBuilder.*;
 
 @Service
 public class AudioModelService {

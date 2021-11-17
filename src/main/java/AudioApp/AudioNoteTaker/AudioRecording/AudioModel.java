@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.AudioRecordings;
+package AudioApp.AudioNoteTaker.AudioRecording;
 
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import lombok.Data;

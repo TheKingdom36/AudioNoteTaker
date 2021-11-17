@@ -1,4 +1,4 @@
-package AudioApp.AudioNoteTaker.AudioRecordings.Repository;
+package AudioApp.AudioNoteTaker.AudioRecording.Repository;
 
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo_;

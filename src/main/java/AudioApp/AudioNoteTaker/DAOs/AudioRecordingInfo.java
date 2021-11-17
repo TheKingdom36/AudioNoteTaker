@@ -14,7 +14,7 @@ import java.util.List;
 @Getter @Setter
 @Entity
 @Table(name="AUDIO_RECORDING_INFORMATION")
-public class AudioRecordingInfo implements Dao {
+public class AudioRecordingInfo {
     @Id
     @Column(name="audio_id")
     @GeneratedValue(strategy=GenerationType.SEQUENCE)

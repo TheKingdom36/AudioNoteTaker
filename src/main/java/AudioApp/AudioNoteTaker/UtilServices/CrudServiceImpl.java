@@ -1,6 +1,6 @@
-package AudioApp.AudioNoteTaker.GeneralServices;
+package AudioApp.AudioNoteTaker.UtilServices;
 
-import AudioApp.AudioNoteTaker.GeneralServices.Interfaces.CrudService;
+import AudioApp.AudioNoteTaker.UtilServices.Interfaces.CrudService;
 import AudioApp.AudioNoteTaker.Repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,9 @@
-package AudioApp.AudioNoteTaker.GeneralServices.Interfaces;
+package AudioApp.AudioNoteTaker.UtilServices.Interfaces;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface CrudService<Item, ID extends Serializable> {

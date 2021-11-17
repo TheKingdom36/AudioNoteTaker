@@ -1,9 +1,8 @@
-package AudioApp.AudioNoteTaker.GeneralServices;
+package AudioApp.AudioNoteTaker.Tag;
 
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import AudioApp.AudioNoteTaker.DAOs.AudioTag;
 import AudioApp.AudioNoteTaker.DAOs.AudioTagId;
-import AudioApp.AudioNoteTaker.Repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

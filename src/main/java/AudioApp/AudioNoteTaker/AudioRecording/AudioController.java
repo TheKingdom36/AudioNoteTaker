@@ -1,5 +1,5 @@
-package AudioApp.AudioNoteTaker.AudioRecordings;
-import AudioApp.AudioNoteTaker.AudioRecordings.RequestResponse.*;
+package AudioApp.AudioNoteTaker.AudioRecording;
+import AudioApp.AudioNoteTaker.AudioRecording.RequestResponse.*;
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController

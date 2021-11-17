@@ -1,10 +1,9 @@
-package AudioApp.AudioNoteTaker.GeneralServices.Interfaces;
+package AudioApp.AudioNoteTaker.UtilServices.Interfaces;
 
 
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 @Service

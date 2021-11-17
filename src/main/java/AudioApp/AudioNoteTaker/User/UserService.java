@@ -2,8 +2,8 @@ package AudioApp.AudioNoteTaker.User;
 
 import AudioApp.AudioNoteTaker.DAOs.Builders.UserBuilder;
 import AudioApp.AudioNoteTaker.DAOs.User;
-import AudioApp.AudioNoteTaker.GeneralServices.CrudServiceImpl;
-import AudioApp.AudioNoteTaker.GeneralServices.DateTimeService;
+import AudioApp.AudioNoteTaker.UtilServices.CrudServiceImpl;
+import AudioApp.AudioNoteTaker.UtilServices.DateTimeService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
