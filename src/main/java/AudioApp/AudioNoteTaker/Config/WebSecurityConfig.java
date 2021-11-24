@@ -31,7 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/recording/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/recording/**").authenticated()
                 .antMatchers(HttpMethod.GET,"/user/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/user/**").authenticated();
+                .antMatchers(HttpMethod.POST,"/user/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/api/**").authenticated();
     }
 
     @Bean
