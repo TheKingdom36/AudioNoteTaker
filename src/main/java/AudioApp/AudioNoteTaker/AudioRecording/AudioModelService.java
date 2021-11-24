@@ -118,6 +118,10 @@ public class AudioModelService {
         AudioRecordingInfo alteredInfo = audioRecordingInfoRepo
                 .findById(updateRequest.getAudioId()).map(audioRecordingInfo -> {
 
+                    if (!(audioRecordingInfo.getUser().getID() ==loggedInUser.getUser().getID())) {
+                        throw new AccessDeniedException("Access denied");
+                    }
+
                     if(isValidAudioName(updateRequest.getName())){
                         audioRecordingInfo.setName(updateRequest.getName());
                     }
@@ -212,8 +216,14 @@ System.out.println(String.valueOf(audioInfo.getId()) + " "+ String.valueOf(audio
 
         Optional<AudioRecordingInfo> audioInfoOptional =  audioRecordingInfoRepo.findById(deleteRequest.getId());
 
+
+
         if(!audioInfoOptional.isPresent()){
             throw new NotFoundException("Unable to find the audio file");
+        }
+
+        if (!(audioInfoOptional.get().getUser().getID() ==loggedInUser.getUser().getID())) {
+            throw new AccessDeniedException("Access denied");
         }
 
         audioFileService.delete(String.valueOf(audioInfoOptional.get().getId()),String.valueOf(loggedInUser.getUser().getID()));
