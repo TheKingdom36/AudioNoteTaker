@@ -18,8 +18,6 @@ import java.util.Set;
 @Table(name="Users",
         uniqueConstraints = @UniqueConstraint(columnNames = {"USERNAME"})
 )
-
-
 public class User implements UserDetails {
 
     @Id
@@ -46,12 +44,15 @@ public class User implements UserDetails {
     private String username;
 
     @Column(name="ACCOUNTNONEXPIRED")
+    @JsonIgnore
     private boolean accountNonExpired;
 
     @Column(name="ACCOUNTNONLOCKED")
+    @JsonIgnore
     private boolean accountNonLocked;
 
     @Column(name="CREDENTIALSNONEXPIRED")
+    @JsonIgnore
     private boolean credentialsNonExpired;
 
     @OneToOne
@@ -59,6 +60,7 @@ public class User implements UserDetails {
     private Authority authority;
 
     @Column(name="PASSWORD")
+    @JsonIgnore
     private String password;
 
     @Column(name="ENABLED")
