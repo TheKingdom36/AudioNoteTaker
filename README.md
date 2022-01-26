@@ -9,7 +9,7 @@
  - JWT token Creation and Authentication
  - Storage of user, audio recording and tag information via a Postgres Database
  - Storage of Audio files via Local Storage 
- - -Exposes API endpoints using Spring boot
+ - Exposes API endpoints using Spring boot
  
  Src Folders:
  - AudioRecording: Holds controllers and services which handles Audio information and audio files
