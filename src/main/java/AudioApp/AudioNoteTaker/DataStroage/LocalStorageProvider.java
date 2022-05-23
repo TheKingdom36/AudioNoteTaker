@@ -47,12 +47,12 @@ public class LocalStorageProvider implements DataStorageProvider {
         file.createNewFile();
         OutputStream outputStream = new FileOutputStream(file);
         outputStream.write(fileData);
+        outputStream.close();
     }
 
     @Override
     public boolean delete(String fileName, String dir) {
         File file = new File(basePath+"/"+dir+"/"+fileName);
-
         return file.delete();
 
 

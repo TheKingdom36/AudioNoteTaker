@@ -1,11 +1,13 @@
 package AudioApp.AudioNoteTaker.User;
 
 
+import AudioApp.AudioNoteTaker.Repository.BaseRepository;
 import AudioApp.AudioNoteTaker.User.RequestResponse.RegisterNewUserRequest;
 import AudioApp.AudioNoteTaker.DAOs.Authority;
 import AudioApp.AudioNoteTaker.DAOs.User;
 import AudioApp.AudioNoteTaker.User.RequestResponse.GetUserResponse;
 import AudioApp.AudioNoteTaker.Utils.AuthorityRoles;
+import AudioApp.AudioNoteTaker.Utils.LoggedInUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.http.HttpStatus;
@@ -13,45 +15,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    JpaRepositoryImplementation<Authority,String> authorityRepo;
+@Autowired
+    LoggedInUser loggedInUser;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUserInfo(@PathVariable String id){
-        User userOptional = userService.findById(Long.parseLong(id));
+    @GetMapping("")
+    public ResponseEntity<?> getUserInfo(){
+        Optional<User> userOptional = userService.findById(loggedInUser.getUser().getID());
 
-            return new ResponseEntity<>(new GetUserResponse(userOptional),HttpStatus.OK);
+        if(userOptional.isPresent() == true) {
+
+            return new ResponseEntity<>(new GetUserResponse(userOptional.get()) ,HttpStatus.OK);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping()
-    public ResponseEntity<?> registerNewUser(@RequestBody RegisterNewUserRequest requestBody){
+    @PostMapping("/login")
+    public ResponseEntity<?> login(){
 
-        System.out.println(requestBody.toString());
+        if(loggedInUser.getUser() != null){
+            return new ResponseEntity<>(new GetUserResponse(loggedInUser.getUser()),HttpStatus.OK);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-        Authority authority = new Authority();
+    @PostMapping("")
+    public ResponseEntity<?> registerNewUser(@ModelAttribute RegisterNewUserRequest requestBody){
 
-        authority.setAuthority(AuthorityRoles.USER.toString());
-        authority.setUsername(requestBody.getEmail());
-        authorityRepo.save(authority);
+        User user = userService.RegisterNewUser(requestBody);
 
-        String newPass = passwordEncoder.encode("password");
-
-        User user= userService.RegisterNewUser("Daniel","Murphy","email",newPass);
-        user.setEnabled(true);
-        user.setAuthority(authority);
-
-        user = userService.save(user);
-
-        return new ResponseEntity<>(requestBody,HttpStatus.OK);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
 

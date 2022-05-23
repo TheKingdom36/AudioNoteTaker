@@ -15,7 +15,7 @@ public class AudioRecordingSpecificationBuilder {
     CriteriaBuilder criteriaBuilder;
 
 
-    public static Specification<AudioRecordingInfo> withTags(List<String> tags) {
+    public static Specification<AudioRecordingInfo> hasTags(List<String> tags) {
         if(tags == null || tags.size()==0){
             return null;
         }
@@ -50,7 +50,7 @@ public class AudioRecordingSpecificationBuilder {
 
     }
 
-    public static Specification<AudioRecordingInfo> withName(String name){
+    public static Specification<AudioRecordingInfo> containsName(String name){
         System.out.println(name);
         if(name==null){
             return null;

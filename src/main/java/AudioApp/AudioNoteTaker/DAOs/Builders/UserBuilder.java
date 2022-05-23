@@ -1,6 +1,7 @@
 package AudioApp.AudioNoteTaker.DAOs.Builders;
 
 import AudioApp.AudioNoteTaker.DAOs.AudioRecordingInfo;
+import AudioApp.AudioNoteTaker.DAOs.Authority;
 import AudioApp.AudioNoteTaker.DAOs.User;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,8 @@ public class UserBuilder {
     private String password;
     private Set<AudioRecordingInfo> audioRecordingInfoSet;
     private String username;
+    private Boolean enabled;
+    private Authority authority;
 
     public UserBuilder(){
 
@@ -58,6 +61,17 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder setEnabled(Boolean enabled){
+        this.enabled = enabled;
+        return this;
+    }
+
+    public UserBuilder setAuthority(Authority authority){
+        this.authority = authority;
+        return this;
+    }
+
+
     public static UserBuilder newBuilder(){
         UserBuilder builder = new UserBuilder();
 
@@ -73,7 +87,9 @@ public class UserBuilder {
         user.setAudioRecordingInfoSet(audioRecordingInfoSet);
         user.setPassword(password);
         user.setDisplayName(displayName);
-        user.setDisplayName(username);
+        user.setAuthority(authority);
+        user.setEnabled(enabled);
+        user.setUsername(username);
 
         return user;
     }

@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultJwtParserBuilder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,7 +73,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
         SecurityContextHolder.getContext().setAuthentication(auth);
-
     }
 
     private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {

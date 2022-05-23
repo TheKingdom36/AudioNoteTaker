@@ -147,7 +147,7 @@ public class AudioModelService {
             });
 
                     return audioRecordingInfo;
-        }).orElseThrow((Supplier<Exception>) () -> new RuntimeException("Could not find audio info"));
+        }).orElseThrow((Supplier<Exception>) () ->  new NotFoundException("Could not find audio info"));
 
         audioRecordingInfoRepo.save(alteredInfo);
 
@@ -173,13 +173,12 @@ public class AudioModelService {
                     }
 
                     return audioRecordingInfo;
-                }).orElseThrow((Supplier<Exception>) () -> new RuntimeException("Could not find audio info"));
+                }).orElseThrow((Supplier<Exception>) () -> new NotFoundException("Could not find audio info"));
 
         model.setAudioRecordingInfo(audioInfo);
 
-        //TODO need to remocve the .m4a
-System.out.println(String.valueOf(audioInfo.getId()) + " "+ String.valueOf(audioInfo.getUser().getID()));
-        model.setAudioData(audioFileService.findOne(String.valueOf(audioInfo.getId())+".m4a",String.valueOf(audioInfo.getUser().getID())));
+
+        model.setAudioData(audioFileService.findOne(String.valueOf(audioInfo.getId()),String.valueOf(audioInfo.getUser().getID())));
 
         return model;
     }
@@ -205,8 +204,8 @@ System.out.println(String.valueOf(audioInfo.getId()) + " "+ String.valueOf(audio
         List<AudioRecordingInfo> resultList = findBySpec(Specification
                 .where(withinDateRange(startDate,endDate))
                 .and(withinDateRange(startDate,endDate))
-                .and(withName(name))
-                .and(withTags(audioTags))
+                .and(containsName(name))
+                .and(hasTags(audioTags))
                 .and(hasUserId(loggedInUser.getUser().getID())));
 
         return resultList;
@@ -226,6 +225,7 @@ System.out.println(String.valueOf(audioInfo.getId()) + " "+ String.valueOf(audio
             throw new AccessDeniedException("Access denied");
         }
 
+        System.out.println("Delerte");
         audioFileService.delete(String.valueOf(audioInfoOptional.get().getId()),String.valueOf(loggedInUser.getUser().getID()));
         audioRecordingInfoRepo.delete(audioInfoOptional.get());
 

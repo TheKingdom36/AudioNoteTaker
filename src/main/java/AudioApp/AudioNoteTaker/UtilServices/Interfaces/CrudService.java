@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface CrudService<Item, ID extends Serializable> {
@@ -11,7 +12,7 @@ public interface CrudService<Item, ID extends Serializable> {
 
     <S extends Item> S update(S entity);
 
-    Item findById(ID id);
+    Optional<Item> findById(ID id);
 
     boolean existsByUuid(String uuid);
 

@@ -31,13 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/recording/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/recording/**").authenticated()
                 .antMatchers(HttpMethod.GET,"/user/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/user/**").authenticated()
-                .antMatchers(HttpMethod.GET,"/api/**").authenticated();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+                .antMatchers(HttpMethod.GET,"/api/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/user/").permitAll();
     }
 
 
@@ -46,8 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder authentication)
             throws Exception
     {
-
-
         authentication.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select username,password,enabled "
@@ -63,6 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return builder.getDefaultUserDetailsService();
     }
 
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+}
 
 }

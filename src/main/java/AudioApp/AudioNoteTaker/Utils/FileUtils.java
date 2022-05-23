@@ -8,11 +8,12 @@ import java.io.IOException;
 public class FileUtils {
     public static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
+        long size = multipartFile.getSize();
+        byte[] arr = multipartFile.getBytes();
         String prefix = fileName.substring(fileName.lastIndexOf("."));
         File file = null;
         file = File.createTempFile(fileName, prefix);
         multipartFile.transferTo(file);
-
         return file;
     }
 }

@@ -1,11 +1,19 @@
 package AudioApp.AudioNoteTaker.User.RequestResponse;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@AllArgsConstructor
+@Getter @Setter
 public class RegisterNewUserRequest {
     private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String password;
 
     public String getFirstName() {
         return firstName;
@@ -39,9 +47,5 @@ public class RegisterNewUserRequest {
         this.password = password;
     }
 
-    private String lastName;
 
-    private String email;
-
-    private String password;
 }

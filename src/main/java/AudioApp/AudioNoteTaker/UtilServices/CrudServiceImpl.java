@@ -3,10 +3,14 @@ package AudioApp.AudioNoteTaker.UtilServices;
 import AudioApp.AudioNoteTaker.UtilServices.Interfaces.CrudService;
 import AudioApp.AudioNoteTaker.Repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public abstract class CrudServiceImpl<Item,ID extends Serializable> implements CrudService<Item,ID> {
@@ -32,8 +36,8 @@ public abstract class CrudServiceImpl<Item,ID extends Serializable> implements C
     }
 
     @Override
-    public Item findById(ID id) {
-        return repository.findById(id).orElseThrow();
+    public Optional<Item> findById(ID id) {
+        return repository.findById(id);
     }
 
     @Override

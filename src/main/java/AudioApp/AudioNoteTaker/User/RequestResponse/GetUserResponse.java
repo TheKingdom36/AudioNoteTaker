@@ -25,6 +25,7 @@ public class GetUserResponse {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.joinedDateTime = user.getJoinedDate();
+        this.email = user.getUsername();
 
     }
 

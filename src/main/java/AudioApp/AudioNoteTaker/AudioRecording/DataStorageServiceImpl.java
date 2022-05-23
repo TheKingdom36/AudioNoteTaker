@@ -29,6 +29,9 @@ public class DataStorageServiceImpl implements DataStorageService {
 
     @Override
     public void delete(String fileName,String dirName) {
+
+        System.out.println("Delete");
+
         dataStorageProvider.delete(fileName,dirName);
     }
 
